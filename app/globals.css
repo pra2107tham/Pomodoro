@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --background: #e8e8e8;
+  --foreground: #2d2d2d;
+  --primary: #f97316;
+  --muted: #888888;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+/* Custom font for timer display */
+@font-face {
+  font-family: 'Timer';
+  src: local('SF Mono'), local('Menlo'), local('Monaco'), local('Consolas');
+}
+
+.timer-font {
+  font-family: 'Timer', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
