@@ -173,22 +173,31 @@ export default function Home() {
   if (!mounted) {
     return (
       <main className="h-[100dvh] w-screen flex items-center justify-center bg-[#e8e8e8]">
-        <div style={{ width: '40dvh', height: '40dvh' }} />
+        <div className="w-[70vw] h-[70vw] max-w-[50dvh] max-h-[50dvh]" />
       </main>
     );
   }
 
   return (
-    <main className="fixed inset-0 flex flex-col bg-[#e8e8e8] select-none overflow-hidden">
-      {/* Top Section - 20% */}
+    <main
+      className="fixed inset-0 flex flex-col bg-[#e8e8e8] select-none overflow-hidden"
+      style={{ height: '100dvh' }}
+    >
+      {/* Top Section - 15% */}
       <header
-        className="flex flex-col items-center justify-center px-6 relative"
-        style={{ height: '20dvh' }}
+        className="flex-shrink-0 flex flex-col items-center justify-end px-6 pb-2 relative"
+        style={{ height: '15dvh' }}
       >
-        <h1 className="text-2xl md:text-3xl font-semibold tracking-[0.18em] text-neutral-800 uppercase">
+        <h1
+          className="font-semibold tracking-[0.2em] text-neutral-800 uppercase"
+          style={{ fontSize: 'clamp(1.5rem, 4dvh, 2rem)' }}
+        >
           {isRunning ? "Now" : "Today"}
         </h1>
-        <p className="text-base md:text-lg text-neutral-400 mt-2 tracking-wide">
+        <p
+          className="text-neutral-400 mt-1 tracking-wide"
+          style={{ fontSize: 'clamp(0.9rem, 2dvh, 1.1rem)' }}
+        >
           {isRunning
             ? "session in progress"
             : `${sessions} session${sessions !== 1 ? "s" : ""} \u2022 ${totalMinutes} min`}
@@ -197,10 +206,14 @@ export default function Home() {
         {!isRunning && (
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="absolute right-6 top-1/2 -translate-y-1/2 p-3 text-neutral-300 hover:text-neutral-500 transition-colors"
+            className="absolute right-6 bottom-2 p-3 text-neutral-400 hover:text-neutral-600 transition-colors"
             aria-label="Menu"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              style={{ width: 'clamp(20px, 3dvh, 28px)', height: 'clamp(20px, 3dvh, 28px)' }}
+            >
               <circle cx="12" cy="5" r="2" />
               <circle cx="12" cy="12" r="2" />
               <circle cx="12" cy="19" r="2" />
@@ -211,10 +224,11 @@ export default function Home() {
         {showMenu && (
           <>
             <div className="fixed inset-0 z-10" onClick={() => setShowMenu(false)} />
-            <div className="absolute right-6 top-[70%] bg-white rounded-xl shadow-lg py-2 min-w-[200px] z-20">
+            <div className="absolute right-6 bottom-[-60px] bg-white rounded-xl shadow-lg py-2 min-w-[200px] z-20">
               <button
                 onClick={handleReset}
-                className="w-full px-5 py-3 text-left text-base text-neutral-600 hover:bg-neutral-50 transition-colors"
+                className="w-full px-5 py-3 text-left text-neutral-600 hover:bg-neutral-50 transition-colors"
+                style={{ fontSize: 'clamp(0.9rem, 2dvh, 1.1rem)' }}
               >
                 Reset today&apos;s sessions
               </button>
@@ -223,14 +237,17 @@ export default function Home() {
         )}
       </header>
 
-      {/* Middle Section - 40% (Timer Circle) */}
+      {/* Middle Section - 55% (Timer Circle + Status) */}
       <div
-        className="flex items-center justify-center px-4"
-        style={{ height: '40dvh' }}
+        className="flex-shrink-0 flex flex-col items-center justify-center px-6"
+        style={{ height: '55dvh' }}
       >
         <div
           className="relative flex items-center justify-center"
-          style={{ width: '40dvh', height: '40dvh', maxWidth: '90vw', maxHeight: '90vw' }}
+          style={{
+            width: 'min(80vw, 45dvh)',
+            height: 'min(80vw, 45dvh)',
+          }}
         >
           <HalftoneCircle isActive={isRunning} />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -239,7 +256,7 @@ export default function Home() {
                 isRunning ? "text-white" : "text-neutral-800"
               }`}
               style={{
-                fontSize: 'clamp(2.5rem, 8dvh, 4.5rem)',
+                fontSize: 'clamp(2.5rem, 10dvh, 5rem)',
                 fontVariantNumeric: 'tabular-nums'
               }}
             >
@@ -247,32 +264,36 @@ export default function Home() {
             </span>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Section - 20% (Status + Button) */}
-      <div
-        className="flex flex-col items-center justify-between px-6 pb-6"
-        style={{ height: '20dvh' }}
-      >
         {/* Status Text */}
-        <p className="text-neutral-400 text-base md:text-lg tracking-wide pt-4">
+        <p
+          className="text-neutral-400 tracking-wide mt-6"
+          style={{ fontSize: 'clamp(1rem, 2.5dvh, 1.25rem)' }}
+        >
           {isRunning ? "focus on one thing" : "ready when you are"}
         </p>
+      </div>
 
-        {/* Action Button */}
+      {/* Bottom Section - 30% (Button) */}
+      <div
+        className="flex-shrink-0 flex flex-col items-center justify-end px-6"
+        style={{ height: '30dvh', paddingBottom: 'max(2rem, 5dvh)' }}
+      >
         <button
           onClick={isRunning ? handleStop : handleStart}
-          className={`w-full max-w-md py-4 md:py-5 rounded-xl text-base md:text-lg font-medium tracking-[0.15em] uppercase transition-all duration-300 ${
+          className={`w-full max-w-lg rounded-2xl font-semibold tracking-[0.2em] uppercase transition-all duration-300 ${
             isRunning
-              ? "bg-transparent border-2 border-neutral-300 text-neutral-600"
-              : "bg-neutral-800 text-white"
+              ? "bg-transparent border-2 border-neutral-400 text-neutral-700"
+              : "bg-neutral-900 text-white"
           }`}
+          style={{
+            padding: 'clamp(1rem, 2.5dvh, 1.5rem) 0',
+            fontSize: 'clamp(1rem, 2.5dvh, 1.25rem)'
+          }}
         >
           {isRunning ? "Stop" : "Start"}
         </button>
       </div>
-
-      {/* Remaining 20% is natural spacing distributed by flexbox */}
     </main>
   );
 }
